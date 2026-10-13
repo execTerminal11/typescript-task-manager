@@ -9,7 +9,7 @@ const task1 = {
     title: "home chore",
     completed: false,
 }
-function information(task: Task): void {
-    console.log(task)
+function information(task: Task ): void {
+    console.log({...task, completed: true}) 
 }
 information(task1)
