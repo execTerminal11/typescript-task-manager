@@ -1,21 +1,18 @@
-1) mkdir backend fontend
+mkdir backend fontend
 pnpm init -y
+pnpm i
 
 
 cd backend
-2) Download base utiles
 pnpm add -D typescript @types/node 
-
-3) Generate the TypeScript configuration
 pnpm exec tsc --init
 
-4) update tsconfig.json
+Update tsconfig.json
     "rootDir": "./src",
     "outDir": "./dist",
     "types": ["node"],
 
-
-5) update package.json
+Update package.json
   "private": true,
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -23,16 +20,21 @@ pnpm exec tsc --init
     "start": "node --import=tsx --watch dist/index.js"
   },
 
+touch pnpm-workspace.yaml
+Update pnpm-workspace.yaml
+packages:
+  - "frontend"
+  - "backend"
+
+
 
 
 cd ../fontend/
-6) fontend
 pnpm create vite
 pnpm add -D @types/react
 pnpm add tailwindcss @tailwindcss/vite react
 
-
-7) update tsconfig.json
+update tsconfig.json
 {
   "compilerOptions": {
     "target": "es2023",
@@ -62,7 +64,7 @@ pnpm add tailwindcss @tailwindcss/vite react
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"]
 }
 
-8) update vite.config.ts
+Update vite.config.ts
 import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -77,14 +79,9 @@ export default defineConfig({
   },
 });
 
-9) update index.css
+Update index.css
 @import "tailwindcss";
 
-
-cd ..
-10) 
-rm backend/pnpm-lock.yaml frontend/pnpm-lock.yaml
-pnpm install
 
 
 
