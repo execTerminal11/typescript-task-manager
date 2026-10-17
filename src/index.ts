@@ -1,5 +1,3 @@
-import { error } from "node:console";
-
 interface Task {
   id: number;
   title: string;
@@ -12,13 +10,16 @@ const tasks: Task[] = [
   { id: 3, title: "go for a walk", completed: false },
 ];
 
+let nextTaskId: number = 4;
 function createTask(userTitle: string): Task | undefined {
-  if (userTitle.trim() === "") {
+  const title = userTitle.trim();
+  if (title === "") {
     console.log("Error: title cannot be empty");
     return undefined;
   }
+
   const task: Task = {
-    id: tasks.length ? Math.max(...tasks.map((task) => task.id)) + 1 : 1,
+    id: nextTaskId++,
     title: userTitle,
     completed: false,
   };
@@ -27,38 +28,41 @@ function createTask(userTitle: string): Task | undefined {
 }
 createTask("try to do it");
 
-function markTaskCompleted(yourId: number): string {
+function markTaskCompleted(yourId: number): Task | undefined {
   const task: Task | undefined = tasks.find((task) => task.id === yourId);
   if (!task) {
-    return "error";
+    undefined;
   }
   task.completed = true;
-  return "completed";
+  return task;
 }
 console.log(markTaskCompleted(1));
 
-function removeTask(yourId: number): string {
+function deleteTask(yourId: number): boolean {
   const index: number = tasks.findIndex((task) => task.id === yourId);
   if (index === -1) {
-    return "error";
+    return false;
   } else {
     tasks.splice(index, 1);
-    return "deleted";
+    return true;
   }
 }
-console.log(removeTask(3));
+console.log(deleteTask(3));
 
-function getTasksById(yourId: number): Task | string {
-   const task: Task | undefined = tasks.find((task) => task.id === yourId);
-   if (!task) {
-      return "error"
-   } else {
-    return task
-   }
+createTask("try to do it2");
+createTask("try to do it3");
+
+function getTaskById(yourId: number): Task | undefined {
+  const task: Task | undefined = tasks.find((task) => task.id === yourId);
+  if (!task) {
+    undefined;
+  } else {
+    return task;
+  }
 }
-console.log(getTasksById(2))
+console.log(getTaskById(2));
 
 function getAllTasks(): Task[] {
   return tasks;
 }
-console.log(getAllTasks())
+console.log(getAllTasks());
