@@ -24,7 +24,6 @@ pnpm exec tsc --init
 
 
 
-
 cd ../fontend/
 6) fontend
 pnpm create vite
@@ -72,11 +71,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
-      comp: fileURLToPath(new URL("./src/components", import.meta.url)),
-      forth: fileURLToPath(
-        new URL("./src/first/second/third/forth", import.meta.url),
-      ),
+      "@": fileURLToPath(new URL("./src", import.meta.url))
     },
   },
 });
