@@ -4,7 +4,7 @@ pnpm init -y
 
 cd backend
 2) Download base utiles
-pnpm add -D typescript @types/node @/common
+pnpm add -D typescript @types/node 
 
 3) Generate the TypeScript configuration
 pnpm exec tsc --init
