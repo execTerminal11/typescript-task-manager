@@ -2,6 +2,22 @@ mkdir backend fontend
 pnpm init -y
 pnpm i
 
+Update package.json
+  "private": true,
+  "scripts": {
+    "build": "pnpm --filter backend build && pnpm --filter frontend build",
+    "devBackend": "pnpm --filter backend start",
+    "devFrontend": "pnpm --filter frontend dev"
+  },
+
+touch pnpm-workspace.yaml
+Update pnpm-workspace.yaml
+packages:
+  - "frontend"
+  - "backend"
+
+
+
 
 cd backend
 pnpm add -D typescript @types/node 
@@ -20,11 +36,7 @@ Update package.json
     "start": "node --import=tsx --watch dist/index.js"
   },
 
-touch pnpm-workspace.yaml
-Update pnpm-workspace.yaml
-packages:
-  - "frontend"
-  - "backend"
+
 
 
 
