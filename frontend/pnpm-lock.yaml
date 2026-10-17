@@ -33,11 +33,8 @@ importers:
       '@types/babel__core':
         specifier: ^7.20.5
         version: 7.20.5
-      '@types/node':
-        specifier: ^24.13.3
-        version: 24.19.2
       '@types/react':
-        specifier: ^19.2.18
+        specifier: ^19.3.0
         version: 19.3.0
       '@types/react-dom':
         specifier: ^19.2.7
@@ -1520,6 +1517,7 @@ snapshots:
   '@types/node@24.19.2':
     dependencies:
       undici-types: 7.24.6
+    optional: true
 
   '@types/react-dom@19.3.0(@types/react@19.3.0)':
     dependencies:
@@ -2103,7 +2101,8 @@ snapshots:
 
   typescript@6.0.3: {}
 
-  undici-types@7.24.6: {}
+  undici-types@7.24.6:
+    optional: true
 
   update-browserslist-db@1.3.4(browserslist@4.29.3):
     dependencies:
