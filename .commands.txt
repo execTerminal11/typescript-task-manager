@@ -1,6 +1,7 @@
 mkdir backend fontend
 pnpm init
 pnpm i
+touch pnpm-workspace.yaml
 
 Update package.json
   "private": true,
@@ -10,7 +11,7 @@ Update package.json
     "devFrontend": "pnpm --filter frontend dev"
   },
 
-touch pnpm-workspace.yaml
+
 Update pnpm-workspace.yaml
 packages:
   - "frontend"
@@ -44,12 +45,12 @@ Update package.json
 cd ../fontend/
 # main
 pnpm create vite
-pnpm add -D @types/react
-pnpm add tailwindcss react
 
-# tailwind
-pnpm add -D tailwindcss @tailwindcss/vite  postcss autoprefixer
-pnpm exec tailwindcss init -p
+maybe doesn't need
+# pnpm add -D @types/react
+# pnpm add tailwindcss react
+
+
 
 update tsconfig.json
 {
