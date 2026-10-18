@@ -1,5 +1,5 @@
 mkdir backend fontend
-pnpm init -y
+pnpm init
 pnpm i
 
 Update package.json
@@ -42,9 +42,14 @@ Update package.json
 
 
 cd ../fontend/
+# main
 pnpm create vite
 pnpm add -D @types/react
-pnpm add tailwindcss @tailwindcss/vite react
+pnpm add tailwindcss react
+
+# tailwind
+pnpm add -D tailwindcss @tailwindcss/vite  postcss autoprefixer
+pnpm exec tailwindcss init -p
 
 update tsconfig.json
 {
@@ -93,6 +98,9 @@ export default defineConfig({
 
 Update index.css
 @import "tailwindcss";
+
+pnx shadcn@latest init
+pnx shadcn@latest add input
 
 
 
