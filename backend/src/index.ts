@@ -5,6 +5,14 @@ const app: Express = express();
 app.get("/", (req: Request, res: Response) => {
   res.send("hello world!");
 });
+
+app.get("/api/health", (req: Request, res: Response) => {
+  res.json({
+    status: "ok",
+    message: "Server is running",
+  });
+});
+
 app.listen(3000);
 // interface Task {
 //   id: number;
