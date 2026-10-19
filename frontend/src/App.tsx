@@ -2,15 +2,17 @@ import type { Task } from "./types";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [tasks, setTasks] = useState<Task[]>(() => {
-    const savedTasks = localStorage.getItem('tasks')
-    return savedTasks ? JSON.parse(savedTasks) : []
-  });
+  // const [tasks, setTasks] = useState<Task[]>(() => {
+  //   const savedTasks = localStorage.getItem('tasks')
+  //   return savedTasks ? JSON.parse(savedTasks) : []
+  // });
+
+  const [tasks, setTasks] = useState<Task[]>([]);
   const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(tasks))
-  }, [tasks])
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = () => {
     if (!newTask.trim()) return;
@@ -18,7 +20,7 @@ function App() {
       ...tasks,
       {
         id: Date.now(),
-        text: newTask,
+        title: newTask,
         completed: false,
       },
     ]);
@@ -80,7 +82,7 @@ function App() {
                   <span
                     className={`flex-1 ${task.completed ? "line-through to-gray-500" : ""}`}
                   >
-                    {task.text}
+                    {task.title}
                   </span>
                 </label>
                 <button
