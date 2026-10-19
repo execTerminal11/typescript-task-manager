@@ -29,8 +29,8 @@ function App() {
   };
 
   const deleteTask = (id: number) => {
-    setTasks(tasks.filter(task => task.id !== id))
-  }
+    setTasks(tasks.filter((task) => task.id !== id));
+  };
   return (
     <>
       {/* <header className="flex gap-10 flex-col m-10">
@@ -65,7 +65,13 @@ function App() {
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
           <h1 className="text-2xl font-bold text-center mb-6"></h1>
           <div className="flex mb-4">
-            input[type="text" value="nexTask" onChange]
+            <input
+              type="text"
+              value="nexTask"
+              onChange={(e) => setNewTask(e.target.value)}
+              className="flex-1 p-2 border rounded-l-lg focus-outline-none focus:border-blue-500"
+              placeholder="Add a new task..."
+            />
           </div>
           {/* https://dev.to/syawqy/create-task-manager-using-react-typescript-bfp */}
         </div>

@@ -48,7 +48,7 @@ pnpm create vite
 
 maybe doesn't need
 # pnpm add -D @types/react
-# pnpm add tailwindcss react
+# pnpm add tailwindcss react    
 
 
 
