@@ -1,70 +1,77 @@
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+import express, { type Express, type Request, type Response } from "express";
 
-const tasks: Task[] = [
-  { id: 1, title: "home chore", completed: false },
-  { id: 2, title: "feed my cat", completed: true },
-  { id: 3, title: "go for a walk", completed: false },
-];
+const app: Express = express();
 
-let nextTaskId: number = 4;
-function createTask(userTitle: string): Task | undefined {
-  const title = userTitle.trim();
-  if (title === "") {
-    console.log("Error: title cannot be empty");
-    return undefined;
-  }
+app.get("/", (req: Request, res: Response) => {
+  res.send("hello world!");
+});
+app.listen(3000);
+// interface Task {
+//   id: number;
+//   title: string;
+//   completed: boolean;
+// }
 
-  const task: Task = {
-    id: nextTaskId++,
-    title: title,
-    completed: false,
-  };
-  tasks.push(task);
-  return task;
-}
-createTask("try to do it");
+// const tasks: Task[] = [
+//   { id: 1, title: "home chore", completed: false },
+//   { id: 2, title: "feed my cat", completed: true },
+//   { id: 3, title: "go for a walk", completed: false },
+// ];
 
-function markTaskCompleted(yourId: number): Task | undefined {
-  const task: Task | undefined = tasks.find((task) => task.id === yourId);
-  if (!task) {
-    return undefined;
-  } else {
-    task.completed = true;
-    return task;
-  }
-}
-console.log(markTaskCompleted(1));
+// let nextTaskId: number = 4;
+// function createTask(userTitle: string): Task | undefined {
+//   const title = userTitle.trim();
+//   if (title === "") {
+//     console.log("Error: title cannot be empty");
+//     return undefined;
+//   }
 
-function deleteTask(yourId: number): boolean {
-  const index: number = tasks.findIndex((task) => task.id === yourId);
-  if (index === -1) {
-    return false;
-  } else {
-    tasks.splice(index, 1);
-    return true;
-  }
-}
-console.log(deleteTask(3));
+//   const task: Task = {
+//     id: nextTaskId++,
+//     title: title,
+//     completed: false,
+//   };
+//   tasks.push(task);
+//   return task;
+// }
+// createTask("try to do it");
 
-createTask("try to do it2");
-createTask("try to do it3");
+// function markTaskCompleted(yourId: number): Task | undefined {
+//   const task: Task | undefined = tasks.find((task) => task.id === yourId);
+//   if (!task) {
+//     return undefined;
+//   } else {
+//     task.completed = true;
+//     return task;
+//   }
+// }
+// console.log(markTaskCompleted(1));
 
+// function deleteTask(yourId: number): boolean {
+//   const index: number = tasks.findIndex((task) => task.id === yourId);
+//   if (index === -1) {
+//     return false;
+//   } else {
+//     tasks.splice(index, 1);
+//     return true;
+//   }
+// }
+// console.log(deleteTask(3));
 
-function getTaskById(yourId: number): Task | undefined {
-  const task: Task | undefined = tasks.find((task) => task.id === yourId);
-  if (!task) {
-    return undefined;
-  } else {
-    return task;
-  }
-}
-console.log(getTaskById(2));
+// createTask("try to do it2");
+// createTask("try to do it3");
 
-function getAllTasks(): Task[] {
-  return tasks;
-}
-console.log(getAllTasks());
+// function getTaskById(yourId: number): Task | undefined {
+//   const task: Task | undefined = tasks.find((task) => task.id === yourId);
+//   if (!task) {
+//     return undefined;
+//   } else {
+//     return task;
+//   }
+// }
+// console.log(getTaskById(2));
+
+// function getAllTasks(): Task[] {
+//   return tasks;
+// }
+// console.log(getAllTasks());

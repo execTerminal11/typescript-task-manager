@@ -21,8 +21,11 @@ packages:
 
 
 cd backend
-pnpm add -D typescript @types/node 
+pnpm add -D typescript @types/node @types/express
 pnpm exec tsc --init
+
+
+
 
 Update tsconfig.json
     "rootDir": "./src",
