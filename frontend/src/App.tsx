@@ -2,17 +2,24 @@ import type { Task } from "./types";
 import { useEffect, useState } from "react";
 
 function App() {
-  // const [tasks, setTasks] = useState<Task[]>(() => {
-  //   const savedTasks = localStorage.getItem('tasks')
-  //   return savedTasks ? JSON.parse(savedTasks) : []
-  // });
-
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [newTask, setNewTask] = useState("");
 
   useEffect(() => {
-    localStorage.setItem("tasks", JSON.stringify(tasks));
-  }, [tasks]);
+    fetch("http://localhost:3000/api/tasks")
+      .then((res) => res.json())
+      .then((data) => setTasks(data));
+  }, []);
+
+  // const [tasks, setTasks] = useState<Task[]>(() => {
+  //   const savedTasks = localStorage.getItem("tasks");
+  //   return savedTasks ? JSON.parse(savedTasks) : [];
+  // });
+
+  const [newTask, setNewTask] = useState("");
+
+  // useEffect(() => {
+  //   localStorage.setItem("tasks", JSON.stringify(tasks));
+  // }, [tasks]);
 
   const addTask = () => {
     if (!newTask.trim()) return;
