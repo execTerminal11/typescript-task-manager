@@ -1,9 +1,15 @@
 import express, { type Express, type Request, type Response } from "express";
 
 const app: Express = express();
-app.use(express.json())
+app.use(express.json());
 
 const PORT = 3000;
+
+interface Task {
+  id: number;
+  title: string;
+  completed: boolean;
+}
 
 app.get("/", (req: Request, res: Response) => {
   res.send("hello world!");
@@ -17,19 +23,15 @@ app.get("/api/health", (req: Request, res: Response) => {
   // });
 });
 
-app.get("/api/tasks", (req: Request, res: Response) => {
-  console.log(req.body)
-});
+// let reqData
+// app.get("/api/tasks", (req: Request, res: Response) => {
+//    reqData = req.body
+//   console.log(reqData);
+// });
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-// interface Task {
-//   id: number;
-//   title: string;
-//   completed: boolean;
-// }
 
 // const tasks: Task[] = [
 //   { id: 1, title: "home chore", completed: false },

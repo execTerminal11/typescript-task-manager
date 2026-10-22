@@ -3,15 +3,17 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
-
-  useEffect(() => {
-    fetch("http://localhost:3000/api/tasks")
-      .then((res) => res.json())
-      .then((data) => setTasks(data));
-  }, []);
+  const createPost = async () => {
+    await fetch("http://localhost:3000/api/test", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ data: "no" }),
+    });
+  };
+  createPost();
 
   // const [tasks, setTasks] = useState<Task[]>(() => {
-  //   const savedTasks = localStorage.getItem("tasks");
+  //   const savesdTasks = localStorage.getItem("tasks");
   //   return savedTasks ? JSON.parse(savedTasks) : [];
   // });
 
