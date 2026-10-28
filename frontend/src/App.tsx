@@ -6,7 +6,7 @@ function App() {
   useEffect(() => {
     async function getTasks() {
       try {
-        const response = await fetch("http://localhost:300/api/firstLaunch");
+        const response = await fetch("http://localhost:3000/api/firstLaunch");
         if (!response.ok) {
           throw new Error(`Request failed: ${response.status}`);
         }

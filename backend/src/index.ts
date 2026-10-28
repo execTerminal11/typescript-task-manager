@@ -1,5 +1,5 @@
 import express, { type Express, type Request, type Response } from "express";
-import * as fs from 'fs'
+const fs = require("node:fs");
 
 const app: Express = express();
 app.use(express.json());
@@ -12,30 +12,22 @@ interface Task {
   completed: boolean;
 }
 
-// Source - https://stackoverflow.com/a/31777314
-// Posted by polkovnikov.ph, modified by community. See post 'Timeline' for change history
-// Retrieved 2026-10-28, License - CC BY-SA 4.0
-let writeTask
-app.get("/api/addTask", (req: Request, res: Response) => {
-  writeTask = req.body
-});
-
-
-fs.writeFile("./tasks.txt", writeTask, { flag: 'wx' }, function (err) {
-    if (err) throw err;
-    console.log("It's saved!");
-});
-
-
 app.get("/api/health", (req: Request, res: Response) => {
   res.status(200).json({ success: true });
-  // res.json({
-  //   status: "ok",
-  //   message: "Server is running",
-  // });
 });
+
+let writeTask;
+app.get("/api/addTask", (req: Request, res: Response) => {
+  writeTask = req.body;
+});
+
+fs.writeFile("./tasks.txt", writeTask, { flag: "wx" }, function (err: string) {
+  if (err) throw err;
+  console.log("It's saved!");
+});
+
 app.post("api/firstLaunch", (req: Request, res: Response) => {
-  res.json({ message: `Backend received: ${req.body.data}` });
+  res.json(fs.readFile("./tasks.txt", "utf8"));
 });
 
 // let reqData
