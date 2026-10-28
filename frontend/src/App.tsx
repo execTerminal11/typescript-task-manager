@@ -3,14 +3,21 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const createPost = async () => {
-    await fetch("http://localhost:3000/api/test", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ data: "no" }),
-    });
-  };
-  createPost();
+  useEffect(() => {
+    async function getTasks() {
+      try {
+        const response = await fetch("http://localhost:300/api/firstLaunch");
+        if (!response.ok) {
+          throw new Error(`Request failed: ${response.status}`);
+        }
+        const data: Task[] = await response.json();
+        setTasks(data);
+      } catch (error) {
+        console.error("Couldn't fetch tasks:", error);
+      }
+    }
+    getTasks();
+  }, []);
 
   // const [tasks, setTasks] = useState<Task[]>(() => {
   //   const savesdTasks = localStorage.getItem("tasks");
@@ -35,6 +42,15 @@ function App() {
     ]);
     setNewTask("");
   };
+
+  const writeTask = async () => {
+    await fetch("http://localhost:3000/api/addTask", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(addTask),
+    });
+  };
+  writeTask();
 
   const toggleTask = (id: number) => {
     setTasks(
