@@ -3,18 +3,27 @@ pnpm init
 pnpm i
 touch -p pnpm-workspace.yaml
 
-Update package.json
-  "private": true,
-  "scripts": {
-    "build": "pnpm --filter backend build && pnpm --filter frontend build",
-    "devBackend": "pnpm --filter backend start",
-    "devFrontend": "pnpm --filter frontend dev"
-  },
-
 Update pnpm-workspace.yaml
 packages:
   - "frontend"
   - "backend"
+
+
+bun install
+
+Update backend/package.json
+  "private": true,
+  "scripts": {
+#"build": "pnpm --filter backend build && pnpm --filter frontend build",
+#"devBackend": "pnpm --filter backend start",
+#"devFrontend": "pnpm --filter frontend dev"
+
+  "build": "bun run --cwd backend build && bun run --cwd frontend build",
+  "dev": "bun run --cwd backend dev",
+  "devFrontend": "bun run --cwd frontend dev"
+  },
+
+
 
 
 
@@ -24,18 +33,20 @@ cd backend
 pnpm add -D typescript @types/node @types/express
 pnpm exec tsc --init
 
-Update tsconfig.json
+Update backend/tsconfig.json
     "rootDir": "./src",
     "outDir": "./dist",
     "types": ["node"],
 
-Update package.json
+Update backend/package.json
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tcs",
-    "start": "node --import=tsx --watch dist/index.js"
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "bun dist/index.js"
+#"start": "node dist/index.js"
   },
+
 
 
 
@@ -52,7 +63,7 @@ maybe doesn't need
 
 
 
-update tsconfig.json
+update frontend/tsconfig.json
 {
   "compilerOptions": {
     "target": "es2023",
@@ -82,7 +93,8 @@ update tsconfig.json
   "include": ["src/**/*.ts", "src/**/*.d.ts", "src/**/*.tsx"]
 }
 
-Update vite.config.ts
+Update frontend/vite.config.ts
+
 import { fileURLToPath, URL } from "node:url";
 import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
@@ -100,8 +112,8 @@ export default defineConfig({
 Update index.css
 @import "tailwindcss";
 
-pnx shadcn@latest init
-pnx shadcn@latest add input
+# pnx shadcn@latest init
+# pnx shadcn@latest add input
 
 
 

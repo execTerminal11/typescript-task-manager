@@ -5,9 +5,9 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "build": "pnpm --filter backend build && pnpm --filter frontend build",
-    "dev": "pnpm --filter backend start",
-    "devFrontend": "pnpm --filter frontend dev"
+    "build": "bun --filter backend build && bun --filter frontend build",
+    "dev": "bun --filter backend start",
+    "devFrontend": "bun --filter frontend dev"
   },
   "keywords": [],
   "author": "",
@@ -20,5 +20,9 @@
     }
   },
   "packageManager": "pnpm@12.14.0",
-  "type": "module"
+  "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend"
+  ]
 }
