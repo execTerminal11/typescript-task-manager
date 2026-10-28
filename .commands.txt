@@ -1,14 +1,7 @@
 mkdir backend fontend
 pnpm init
 pnpm i
-touch -p pnpm-workspace.yaml .dockerignore
-update .dockerignore
-**/node_modules
-**/dist
-.git
-.env
-**/.env*
-*.log
+touch -p pnpm-workspace.yaml
 
 Update package.json
   "private": true,

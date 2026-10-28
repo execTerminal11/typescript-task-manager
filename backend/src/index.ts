@@ -1,105 +1,38 @@
 import express, { type Express, type Request, type Response } from "express";
-const fs = require("node:fs");
+import { createRequire } from "module";
+const require = createRequire(import.meta.url);
+import { fileURLToPath } from "url";
+import { dirname } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const path = require("node:path");
+// const fs = require("node:fs");
 
 const app: Express = express();
 app.use(express.json());
-
 const PORT = 3000;
 
-interface Task {
-  id: number;
-  title: string;
-  completed: boolean;
-}
+// interface Task {
+//   id: number;
+//   title: string;
+//   completed: boolean;
+// }
 
-app.get("/api/health", (req: Request, res: Response) => {
-  res.status(200).json({ success: true });
-});
-
-let writeTask;
-app.get("/api/addTask", (req: Request, res: Response) => {
-  writeTask = req.body;
-});
-
-fs.writeFile("./tasks.txt", writeTask, { flag: "wx" }, function (err: string) {
-  if (err) throw err;
-  console.log("It's saved!");
-});
-
-app.post("api/firstLaunch", (req: Request, res: Response) => {
-  res.json(fs.readFile("./tasks.txt", "utf8"));
-});
-
-// let reqData
-// app.get("/api/tasks", (req: Request, res: Response) => {
-//    reqData = req.body
-//   console.log(reqData);
+// app.get("/api/health", (req: Request, res: Response) => {
+//   res.status(200).json({ success: true });
 // });
+
+const distPath = path.resolve(__dirname, "../../frontend/dist");
+
+app.use(express.static(distPath));
+
+app.use((req, res, next) => {
+  if (req.method !== "GET") {
+    return next();
+  }
+  res.sendFile(path.join(distPath, "index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
-
-// const tasks: Task[] = [
-//   { id: 1, title: "home chore", completed: false },
-//   { id: 2, title: "feed my cat", completed: true },
-//   { id: 3, title: "go for a walk", completed: false },
-// ];
-
-// let nextTaskId: number = 4;
-// function createTask(userTitle: string): Task | undefined {
-//   const title = userTitle.trim();
-//   if (title === "") {
-//     console.log("Error: title cannot be empty");
-//     return undefined;
-//   }
-
-//   const task: Task = {
-//     id: nextTaskId++,
-//     title: title,
-//     completed: false,
-//   };
-//   tasks.push(task);
-//   return task;
-// }
-// createTask("try to do it");
-
-// function markTaskCompleted(yourId: number): Task | undefined {
-//   const task: Task | undefined = tasks.find((task) => task.id === yourId);
-//   if (!task) {
-//     return undefined;
-//   } else {
-//     task.completed = true;
-//     return task;
-//   }
-// }
-// console.log(markTaskCompleted(1));
-
-// function deleteTask(yourId: number): boolean {
-//   const index: number = tasks.findIndex((task) => task.id === yourId);
-//   if (index === -1) {
-//     return false;
-//   } else {
-//     tasks.splice(index, 1);
-//     return true;
-//   }
-// }
-// console.log(deleteTask(3));
-
-// createTask("try to do it2");
-// createTask("try to do it3");
-
-// function getTaskById(yourId: number): Task | undefined {
-//   const task: Task | undefined = tasks.find((task) => task.id === yourId);
-//   if (!task) {
-//     return undefined;
-//   } else {
-//     return task;
-//   }
-// }
-// console.log(getTaskById(2));
-
-// function getAllTasks(): Task[] {
-//   return tasks;
-// }
-// console.log(getAllTasks());

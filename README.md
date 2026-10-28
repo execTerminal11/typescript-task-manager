@@ -1,6 +1,6 @@
 # TS task manager
 
-Fullstack monorepo in ts, react, taiwil, express
+Fullstack monorepo in type script, react, taiwindcss, express
 
 # installation
 
@@ -9,10 +9,5 @@ git clone https://github.com/execTerminal11/typescript-task-manager
 cd typescript-task-manager
 pnpm i
 pnpm build
-pnpm devFrontend
-```
-
-In a second terminal, run:
-```py
-pnpm devBackend
+pnpm run dev
 ```

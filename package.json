@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "pnpm --filter backend build && pnpm --filter frontend build",
-    "devBackend": "pnpm --filter backend start",
+    "dev": "pnpm --filter backend start",
     "devFrontend": "pnpm --filter frontend dev"
   },
   "keywords": [],
