@@ -1,64 +1,49 @@
-import type { Task } from "./types";
 import { useState } from "react";
+import type { FormEvent } from "react";
+import type { Task } from "./types";
+import { useTasks } from "./hooks/useTasks";
 
-function App() {
-  const [tasks, setTasks] = useState<Task[]>([]);
+interface TaskFormProps {
+  onSubmit: (data: Task) => Promise<void>;
+}
 
-  // const [tasks, setTasks] = useState<Task[]>(() => {
-  //   const savesdTasks = localStorage.getItem("tasks");
-  //   return savedTasks ? JSON.parse(savedTasks) : [];
-  // });
+function TaskForm({ onSubmit }: TaskFormProps) {
+  const { tasks, removeTask } = useTasks();
 
-  const [newTask, setNewTask] = useState("");
+  const [title, setTitle] = useState("");
 
-  // useEffect(() => {
-  //   localStorage.setItem("tasks", JSON.stringify(tasks));
-  // }, [tasks]);
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
-  const addTask = () => {
-    if (!newTask.trim()) return;
-    setTasks([
-      ...tasks,
-      {
-        id: Date.now(),
-        title: newTask,
-        completed: false,
-      },
-    ]);
-    setNewTask("");
-  };
-
-  const toggleTask = (id: number) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task,
-      ),
-    );
-  };
-
-  const deleteTask = (id: number) => {
-    setTasks(tasks.filter((task) => task.id !== id));
+    if (!title.trim()) {
+      return;
+    }
+    try {
+      await onSubmit({
+        title: title.trim(),
+      });
+    } catch (error) {
+      console.error("Error submitting task:", error);
+    }
   };
   return (
     <>
-      <div className="min-h-screen bg-gray-100 py-8">
+      <form onSubmit={handleSubmit} className="min-h-screen bg-gray-100 py-8">
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
           <h1 className="text-2xl font-bold text-center mb-6"></h1>
           <div className="flex mb-4">
             <input
               type="text"
-              value={newTask}
-              onKeyUp={(e) => {
-                if (e.key === "Enter") addTask();
-              }}
-              onChange={(e) => setNewTask(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              // onSubmit={handleSubmit}
               className="flex-1 p-2 border rounded-l-lg focus-outline-none focus:border-blue-500"
               placeholder="Add a new task..."
             />
 
             <button
               className="bg-blue-500 text-white rounded-r-lg hover:bg-blue-600"
-              onClick={addTask}
+              type="submit"
             >
               Add
             </button>
@@ -70,7 +55,7 @@ function App() {
                 key={task.id}
                 className="flex items-center p-3 bg-gray-50 rounded-lg"
               >
-                <label className="flex items-center flex-1 cursor-pointer">
+                {/* <label className="flex items/-center flex-1 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={task.completed}
@@ -85,9 +70,9 @@ function App() {
                   >
                     {task.title}
                   </span>
-                </label>
+                </label> */}
                 <button
-                  onClick={() => deleteTask(task.id)}
+                  onClick={() => removeTask(task.id)}
                   className="text-red-500 hover:text-red-700"
                 >
                   Delete
@@ -96,9 +81,15 @@ function App() {
             ))}
           </div>
         </div>
-      </div>
+      </form>
     </>
   );
+}
+
+function App() {
+  const { addTask } = useTasks();
+
+  return <TaskForm onSubmit={addTask} />;
 }
 
 export default App;
