@@ -8,7 +8,7 @@ interface TaskFormProps {
 }
 
 function TaskForm({ onSubmit }: TaskFormProps) {
-  const { tasks, removeTask } = useTasks();
+  const { tasks, removeTask, toggleTask } = useTasks();
   const [title, setTitle] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
@@ -23,6 +23,8 @@ function TaskForm({ onSubmit }: TaskFormProps) {
       });
     } catch (error) {
       console.error("Error submitting task:", error);
+    } finally {
+      setTitle("");
     }
   };
   return (
@@ -54,14 +56,11 @@ function TaskForm({ onSubmit }: TaskFormProps) {
                 key={task.id}
                 className="flex items-center p-3 bg-gray-50 rounded-lg"
               >
-                {/* <label className="flex items/-center flex-1 cursor-pointer">
+                <label className="flex items/-center flex-1 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={task.completed}
                     onChange={() => toggleTask(task.id)}
-                    onKeyUp={(e) => {
-                      if (e.key === "Enter") addTask();
-                    }}
                     className="mr-3 h-4 w-4 cursor-pointer accent-blue-500"
                   />
                   <span
@@ -69,7 +68,7 @@ function TaskForm({ onSubmit }: TaskFormProps) {
                   >
                     {task.title}
                   </span>
-                </label> */}
+                </label>
                 <button
                   onClick={() => removeTask(task.id)}
                   className="text-red-500 hover:text-red-700"

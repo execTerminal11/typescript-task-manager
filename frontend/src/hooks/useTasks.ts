@@ -4,27 +4,20 @@ import { taskApi } from "../services/api";
 
 interface UseTasksReturn {
   tasks: Task[];
-  loading: boolean;
-  error: string | null;
   fetchTasks: () => Promise<void>;
   addTask: (data: Task) => Promise<void>;
   removeTask: (id: number) => Promise<void>;
-  //   toggleTask: (id: string) => Promise<void>;
+  toggleTask: (id: number) => Promise<void>;
 }
 
 export const useTasks = (): UseTasksReturn => {
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   const fetchTasks = useCallback(async () => {
     try {
       const fetchedTasks = await taskApi.getTasks();
       setTasks(fetchedTasks);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to fetch tasks";
-      setError(message);
       console.log("Error fetching tasks:", err);
       throw err;
     }
@@ -32,13 +25,9 @@ export const useTasks = (): UseTasksReturn => {
 
   const addTask = useCallback(async (data: Task) => {
     try {
-      setError(null);
       const newTask = await taskApi.createTask(data);
       setTasks((prevTask) => [newTask, ...prevTask]);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to fetch tasks";
-      setError(message);
       console.log("Error creating taks", err);
       throw err;
     }
@@ -46,13 +35,9 @@ export const useTasks = (): UseTasksReturn => {
 
   const removeTask = useCallback(async (id: number) => {
     try {
-      setError(null);
       await taskApi.deleteTask(id);
       setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Failed to delete task";
-      setError(message);
       console.error("Error deleting task:", err);
       throw err;
     }
@@ -69,12 +54,35 @@ export const useTasks = (): UseTasksReturn => {
     loadTasks();
   }, [fetchTasks]);
 
+  const toggleTask = useCallback(
+    async (id: number) => {
+      const task = tasks.find((t) => t.id === id);
+      if (!task) return;
+
+      try {
+        setTasks((prevTasks) =>
+          prevTasks.map((t) =>
+            t.id === id ? { ...t, completed: !t.completed } : t,
+          ),
+        );
+      } catch (err) {
+        setTasks((prevTasks) =>
+          prevTasks.map((t) =>
+            t.id === id ? { ...t, completed: task.completed } : t,
+          ),
+        );
+        console.error("Error toggling task:", err);
+        throw err;
+      }
+    },
+    [tasks],
+  );
+
   return {
     tasks,
-    loading,
-    error,
     fetchTasks,
     addTask,
     removeTask,
+    toggleTask,
   };
 };
