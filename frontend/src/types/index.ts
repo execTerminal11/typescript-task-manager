@@ -1,7 +1,7 @@
 export interface Task {
-  id?: number;
+  id: number;
   title: string;
-  completed?: boolean;
+  completed: boolean;
 }
 
 export interface ApiResponse<T> {
@@ -9,7 +9,7 @@ export interface ApiResponse<T> {
   data?: T;
   error?: {
     message: string;
-    details?: any;
+    details?: void;
   };
   message?: string;
 }
