@@ -19,32 +19,30 @@ export const useTasks = (): UseTasksReturn => {
 
   const fetchTasks = useCallback(async () => {
     try {
-      setLoading(true);
-      setError(null);
       const fetchedTasks = await taskApi.getTasks();
       setTasks(fetchedTasks);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Failed to fetch tasks";
+      const message =
+        err instanceof Error ? err.message : "Failed to fetch tasks";
       setError(message);
       console.log("Error fetching tasks:", err);
       throw err;
-    } finally {
-      setLoading(false);
     }
   }, []);
 
   const addTask = useCallback(async (data: Task) => {
     try {
-        setError(null);
-        const newTask = await taskApi.createTask(data);
-        setTasks ((prevTask) => [newTask, ...prevTask]);
+      setError(null);
+      const newTask = await taskApi.createTask(data);
+      setTasks((prevTask) => [newTask, ...prevTask]);
     } catch (err) {
-        const message = err instanceof Error ? err.message : "Failed to fetch tasks";
-        setError(message);
-        console.log("Error creating taks", err);
-        throw err;
+      const message =
+        err instanceof Error ? err.message : "Failed to fetch tasks";
+      setError(message);
+      console.log("Error creating taks", err);
+      throw err;
     }
-  }, [])
+  }, []);
 
   const removeTask = useCallback(async (id: number) => {
     try {
@@ -61,16 +59,22 @@ export const useTasks = (): UseTasksReturn => {
   }, []);
 
   useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks])
+    const loadTasks = async () => {
+      try {
+        await fetchTasks();
+      } catch (err) {
+        console.error("Failed to load tasks using useEffect:", err);
+      }
+    };
+    loadTasks();
+  }, [fetchTasks]);
 
   return {
     tasks,
-    loading, 
+    loading,
     error,
     fetchTasks,
     addTask,
     removeTask,
-  }
-
+  };
 };

@@ -9,7 +9,6 @@ interface TaskFormProps {
 
 function TaskForm({ onSubmit }: TaskFormProps) {
   const { tasks, removeTask } = useTasks();
-
   const [title, setTitle] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
