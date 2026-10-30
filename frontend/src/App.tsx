@@ -1,5 +1,4 @@
 import { useState } from "react";
-import type { FormEvent } from "react";
 import type { Task } from "./types";
 import { useTasks } from "./hooks/useTasks";
 
@@ -11,7 +10,7 @@ function TaskForm({ onSubmit }: TaskFormProps) {
   const { tasks, removeTask, toggleTask } = useTasks();
   const [title, setTitle] = useState("");
 
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     if (!title.trim()) {
@@ -37,8 +36,7 @@ function TaskForm({ onSubmit }: TaskFormProps) {
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              // onSubmit={handleSubmit}
-              className="flex-1 p-2 border rounded-l-lg focus-outline-none focus:border-blue-500"
+              className="flex-1 p-2 border rounded-l-lg focus:outline-none focus:border-blue-500"
               placeholder="Add a new task..."
             />
 

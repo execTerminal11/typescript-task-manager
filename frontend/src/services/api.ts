@@ -16,7 +16,7 @@ apiClient.interceptors.response.use(
       throw new Error("Network error: Unable to connect to the server");
     }
 
-    // Handle API 
+    // Handle API
     const errorData = error.response.data as any;
     const message =
       errorData?.error?.message ||
@@ -41,7 +41,7 @@ export const taskApi = {
     return response.data.data;
   },
 
-//   async toggleTask(id: string, completed: boolean):
+  //   async toggleTask(id: string, completed: boolean):
 
   async deleteTask(id: number): Promise<void> {
     await apiClient.delete(`/tasks/${id}`);
