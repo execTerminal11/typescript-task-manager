@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import type { Task, ApiResponse } from "@/types";
+import type { Task, ApiResponse, RawTitle, TaskUpdate } from "@/types";
 
 const apiClient = axios.create({
   baseURL: "api",
@@ -33,7 +33,7 @@ export const taskApi = {
     return response.data.data || [];
   },
 
-  async createTask(data: Task): Promise<Task> {
+  async createTask(data: RawTitle): Promise<Task> {
     const response = await apiClient.post<ApiResponse<Task>>("/tasks", data);
     if (!response.data.data) {
       throw new Error("Failed to create task");
@@ -41,7 +41,16 @@ export const taskApi = {
     return response.data.data;
   },
 
-  //   async toggleTask(id: string, completed: boolean):
+  async updateTask(id: number, data: TaskUpdate): Promise<Task> {
+    const response = await apiClient.put<ApiResponse<Task>>(
+      `/tasks/${id}`,
+      data,
+    );
+    if (!response.data.data) {
+      throw new Error("Failed to update task");
+    }
+    return response.data.data;
+  },
 
   async deleteTask(id: number): Promise<void> {
     await apiClient.delete(`/tasks/${id}`);

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import type { Task } from "./types";
+import type { RawTitle } from "./types";
 import { useTasks } from "./hooks/useTasks";
 
 interface TaskFormProps {
-  onSubmit: (data: Task) => Promise<void>;
+  onSubmit: (data: RawTitle) => Promise<void>;
 }
 
 function TaskForm({ onSubmit }: TaskFormProps) {

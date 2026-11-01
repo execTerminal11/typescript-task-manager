@@ -7,7 +7,7 @@ Fullstack monorepo in type script, react, taiwindcss, express
 ```py
 git clone https://github.com/execTerminal11/typescript-task-manager
 cd typescript-task-manager
-pnpm i
-pnpm build
-pnpm run dev
+bun i
+bun run build
+bun run dev
 ```

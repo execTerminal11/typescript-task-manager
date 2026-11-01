@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback } from "react";
-import type { Task } from "@/types";
+import type { RawTitle, Task } from "@/types";
 import { taskApi } from "../services/api";
 
 interface UseTasksReturn {
   tasks: Task[];
   fetchTasks: () => Promise<void>;
-  addTask: (data: Task) => Promise<void>;
+  addTask: (data: RawTitle) => Promise<void>;
   removeTask: (id: number) => Promise<void>;
   toggleTask: (id: number) => Promise<void>;
 }
@@ -23,7 +23,7 @@ export const useTasks = (): UseTasksReturn => {
     }
   }, []);
 
-  const addTask = useCallback(async (data: Task) => {
+  const addTask = useCallback(async (data: RawTitle) => {
     try {
       const newTask = await taskApi.createTask(data);
       setTasks((prevTask) => [newTask, ...prevTask]);
@@ -43,6 +43,32 @@ export const useTasks = (): UseTasksReturn => {
     }
   }, []);
 
+    const toggleTask = useCallback(
+      async (id: number) =>{
+        const task = tasks.find((t) => t.id === id);
+        if (!task) return;
+
+        try {
+          setTasks((prevTasks) =>
+            prevTasks.map((t) =>
+              t.id === id ? { ...t, completed: !t.completed } : t,
+            ),
+          );
+          await taskApi.updateTask(id, { completed: !task.completed });
+        } catch (err) {
+          setTasks((prevTasks) =>
+            prevTasks.map((t) =>
+              t.id === id ? { ...t, completed: task.completed } : t,
+            ),
+          );
+          console.error("Error toggling task:", err);
+          throw err;
+        }
+      },
+      [tasks],
+    );
+
+
   useEffect(() => {
     const loadTasks = async () => {
       try {
@@ -54,29 +80,6 @@ export const useTasks = (): UseTasksReturn => {
     loadTasks();
   }, [fetchTasks]);
 
-  const toggleTask = useCallback(
-    async (id: number) => {
-      const task = tasks.find((t) => t.id === id);
-      if (!task) return;
-
-      try {
-        setTasks((prevTasks) =>
-          prevTasks.map((t) =>
-            t.id === id ? { ...t, completed: !t.completed } : t,
-          ),
-        );
-      } catch (err) {
-        setTasks((prevTasks) =>
-          prevTasks.map((t) =>
-            t.id === id ? { ...t, completed: task.completed } : t,
-          ),
-        );
-        console.error("Error toggling task:", err);
-        throw err;
-      }
-    },
-    [tasks],
-  );
 
   return {
     tasks,
