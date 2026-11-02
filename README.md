@@ -8,6 +8,7 @@ Fullstack monorepo in type script, react, taiwindcss, express
 git clone https://github.com/execTerminal11/typescript-task-manager
 cd typescript-task-manager
 bun i
+cp .env.example ./backend/.env
 bun run build
 bun run dev
 ```

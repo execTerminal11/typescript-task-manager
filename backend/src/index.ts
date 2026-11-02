@@ -6,11 +6,15 @@ import express, {
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 import app from "./app.js";
+import dotenv from "dotenv";
+
+dotenv.config();
+
+const PORT = process.env.PORT || 3000;
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const PORT = 3000;
-
 const distPath = path.resolve(__dirname, "../../frontend/dist");
+
 app.use(express.static(distPath));
 
 app.use((req: Request, res: Response, next: NextFunction) => {
