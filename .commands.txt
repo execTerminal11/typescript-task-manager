@@ -3,6 +3,11 @@ pnpm init
 pnpm i
 touch -p pnpm-workspace.yaml
 
+pnpm add -Dw eslint
+pnpm create @eslint/config@latest
+pnpm add -Dw eslint @eslint/js globals typescript-eslint eslint-plugin-react
+
+
 Update pnpm-workspace.yaml
 packages:
   - "frontend"
