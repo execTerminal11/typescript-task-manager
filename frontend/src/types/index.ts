@@ -15,11 +15,18 @@ export interface TaskUpdate {
 }
 
 export interface ApiResponse<T> {
-  success: boolean;
+  success?: boolean;
   data?: T;
   error?: {
     message: string;
     details?: void;
+  };
+  message?: string;
+}
+
+export interface ApiErrorResponse {
+  error?: {
+    message: string;
   };
   message?: string;
 }

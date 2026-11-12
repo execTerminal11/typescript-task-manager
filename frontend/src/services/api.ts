@@ -1,5 +1,5 @@
 import axios, { AxiosError } from "axios";
-import type { Task, ApiResponse, RawTitle, TaskUpdate } from "@/types";
+import type { Task, ApiResponse, RawTitle, TaskUpdate, ApiErrorResponse } from "@/types";
 
 const apiClient = axios.create({
   baseURL: "api",
@@ -10,14 +10,14 @@ const apiClient = axios.create({
 
 apiClient.interceptors.response.use(
   (response) => response,
-  (error: AxiosError) => {
-    // Handle network errors
+  (error: AxiosError<ApiErrorResponse>) => {
+
     if (!error.response) {
       throw new Error("Network error: Unable to connect to the server");
     }
 
     // Handle API
-    const errorData = error.response.data as any;
+    const errorData = error.response.data;
     const message =
       errorData?.error?.message ||
       errorData?.message ||

@@ -16,6 +16,7 @@ export const errorHandler = (
   err: Error | AppError,
   req: Request,
   res: Response,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   next: NextFunction,
 ) => {
   let statusCode = 500;
@@ -24,13 +25,7 @@ export const errorHandler = (
   if (err instanceof AppError) {
     statusCode = err.statusCode;
     message = err.message;
-  } else if (err.name === "ValidationError") {
-    statusCode = 400;
-    message = err.message;
-  } else if (err.name === "CastError") {
-    statusCode = 400;
-    message = "invalid ID format";
-  }
+  } 
 
   console.error("Error", {
     message: err.message,

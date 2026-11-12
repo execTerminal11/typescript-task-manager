@@ -14,18 +14,13 @@ packages:
   - "backend"
 
 
-bun install
-
 Update backend/package.json
   "private": true,
   "scripts": {
-#"build": "pnpm --filter backend build && pnpm --filter frontend build",
-#"devBackend": "pnpm --filter backend start",
-#"devFrontend": "pnpm --filter frontend dev"
+    "build": "pnpm --filter backend build && pnpm --filter frontend build",
+    "devBackend": "pnpm --filter backend start",
+    "devFrontend": "pnpm --filter frontend dev"
 
-  "build": "bun run --cwd backend build && bun run --cwd frontend build",
-  "dev": "bun run --cwd backend dev",
-  "devFrontend": "bun run --cwd frontend dev"
   },
 
 
@@ -48,8 +43,7 @@ Update backend/package.json
   "scripts": {
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
-    "start": "bun dist/index.js"
-#"start": "node dist/index.js"
+    "start": "node dist/index.js"
   },
 
 
